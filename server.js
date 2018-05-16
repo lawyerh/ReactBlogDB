@@ -18,21 +18,32 @@ const app = express();
 app.use(bp.json());
 
 app.get('/', function(req,res){
+    connection.query("select * from posts;", function(err, results){
+                if(err){
+                    throw err;
+                }
+                else{
+                    res.json(results);
+                }
+            });
+})
 
+app.get('/posts/:id', function(req,res){
+    const id = req.params.id;
     connection.connect(function(err){
         if(err){
             throw err;
         }
-        connection.query("select * from posts;", function(err, results){
+        connection.query(`select * from posts where(posts.id = ${id})`, function(err, post){
             if(err){
                 throw err;
             }
             else{
-                res.json(results);
+                res.json(post);
             }
         });
     })
-})
+});
 
 app.listen(4000, function(){
     console.log("Listening on 4000");
