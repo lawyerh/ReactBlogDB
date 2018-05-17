@@ -57,16 +57,12 @@ app.get('/posts/search/:terms', function(req,res){
             terms += ' or categories.category = '
         }
     }
-    console.log(term)
-    // connection.query(`select categories.category, posts.content, posts.posterName, posts.created_at from posts, categories where(categories.category = '${term[correctedTerms]}')`, function(err, post){
-    //     if(err){
-    //         throw err
-    //     }
-    //     else{
-    //         terms.push(post)
-    //     }
-    // });
     console.log(terms)
+    connection.query(`select categories.category, posts.content, posts.posterName, posts.created_at from posts, categories where(categories.category = '${terms}')`, function(err, post){
+        if(err){
+            throw err
+        }
+    });
 })
 
 app.post('/posts', function(req, res){
