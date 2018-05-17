@@ -46,18 +46,26 @@ app.get('/posts/search/:terms', function(req,res){
     let correctedTerms = terms.map(t => t.toLowerCase());
     console.log(terms);
     console.log(correctedTerms);
-    terms = [];
+    terms = '';
 
     for(let term = 0; term < correctedTerms.length; term++){
-        connection.query(`select categories.category, posts.content, posts.posterName, posts.created_at from posts, categories where(categories.category = '${term[correctedTerms]}')`, function(err, post){
-            if(err){
-                throw err
-            }
-            else{
-                terms.push(post)
-            }
-        });
+
+        terms += `${correctedTerms[term]}`
+
+        if(term != correctedTerms.length-1)
+        {
+            terms += ' or categories.category = '
+        }
     }
+    console.log(term)
+    // connection.query(`select categories.category, posts.content, posts.posterName, posts.created_at from posts, categories where(categories.category = '${term[correctedTerms]}')`, function(err, post){
+    //     if(err){
+    //         throw err
+    //     }
+    //     else{
+    //         terms.push(post)
+    //     }
+    // });
     console.log(terms)
 })
 
