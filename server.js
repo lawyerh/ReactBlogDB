@@ -18,6 +18,13 @@ const app = express();
 app.use(bp.json()); // Configure body-parser
 app.use(bp.urlencoded({ extended: false }));
 
+app.use(function(req, res, next){ // Allow data requests from this API from anywhere
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+
+})
+
 app.get('/', function(req,res){ // Get all the posts
     connection.query("select * from posts;", function(err, results){
                 if(err){
