@@ -104,7 +104,7 @@ app.delete('/posts/:id', function(req,res){ // Delete a post by id
     });
 })
 
-app.listen(4000, function(){ // Run the server
+app.listen(process.env.port || 4000, function(){ // Run the server
     console.log("Listening on 4000");
 })
 
