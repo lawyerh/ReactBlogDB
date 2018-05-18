@@ -25,7 +25,14 @@ app.use(function(req, res, next){ // Allow data requests from this API from anyw
 
 })
 
-app.get('/', function(req,res){ // Get all the posts
+app.get('/', function(req, res){
+    res.json({
+        success: "Welcome to this API!",
+        info: "Available queries include /posts (post, get), /posts/ID (get, delete)"
+    })
+})
+
+app.get('/posts', function(req,res){ // Get all the posts
     connection.query("select * from posts;", function(err, results){
                 if(err){
                     throw err;
